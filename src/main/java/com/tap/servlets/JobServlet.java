@@ -28,7 +28,7 @@ public class JobServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
-        resp.setHeader("Access-Control-Allow-Origin", "http://localhost:3000"); 
+        resp.setHeader("Access-Control-Allow-Origin", "*"); 
         resp.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
         resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
@@ -50,7 +50,7 @@ public class JobServlet extends HttpServlet {
     
 @Override
 protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    response.setHeader("Access-Control-Allow-Origin", "https://job-management-hf3nkffat-hari-varadhans-projects.vercel.app/");
+    response.setHeader("Access-Control-Allow-Origin", "*");
     response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
     response.setHeader("Access-Control-Allow-Credentials", "true");
     response.setHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -65,7 +65,7 @@ protected void doOptions(HttpServletRequest request, HttpServletResponse respons
 
 		
 		
-		response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
 		response.setHeader("Access-Control-Allow-Credentials", "true");
 
