@@ -10,7 +10,8 @@ public static Connection getConnection() {
 	try {
 
     	Class.forName("com.mysql.cj.jdbc.Driver");
-		 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/management", "root", "root");
+		 con = DriverManager.getConnection("mysql://root:NArJySUIOdQMLfoAFHyXiSXMhnKRyNXc@shinkansen.proxy.rlwy.net:57936/railway", "root", "NArJySUIOdQMLfoAFHyXiSXMhnKRyNXc");
+
 	} catch (SQLException e) {
 		e.printStackTrace();
 	} catch (ClassNotFoundException e) {
