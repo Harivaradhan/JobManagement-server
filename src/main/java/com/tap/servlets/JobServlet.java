@@ -50,7 +50,7 @@ public class JobServlet extends HttpServlet {
     
 @Override
 protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+    response.setHeader("Access-Control-Allow-Origin", "https://job-management-hf3nkffat-hari-varadhans-projects.vercel.app/");
     response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
     response.setHeader("Access-Control-Allow-Credentials", "true");
     response.setHeader("Access-Control-Allow-Headers", "Content-Type");
