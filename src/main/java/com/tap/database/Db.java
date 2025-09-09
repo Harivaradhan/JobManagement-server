@@ -10,7 +10,8 @@ public static Connection getConnection() {
 	try {
 
     	Class.forName("com.mysql.cj.jdbc.Driver");
-		 con = DriverManager.getConnection("mysql://root:NArJySUIOdQMLfoAFHyXiSXMhnKRyNXc@shinkansen.proxy.rlwy.net:57936/railway", "root", "NArJySUIOdQMLfoAFHyXiSXMhnKRyNXc");
+		 con = DriverManager.getConnection("jdbc:mysql://shinkansen.proxy.rlwy.net:57936/railway"
+		 		, "root", "NArJySUIOdQMLfoAFHyXiSXMhnKRyNXc");
 
 	} catch (SQLException e) {
 		e.printStackTrace();
