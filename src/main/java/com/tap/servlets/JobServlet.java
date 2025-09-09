@@ -14,7 +14,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/api/jobs")
+
 public class JobServlet extends HttpServlet {
     private JobDao jobDao = new JobDao();
 

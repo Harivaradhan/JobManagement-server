@@ -11,7 +11,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebFilter("/*")
+
 public class CorsFilter implements Filter {
 
     @Override
