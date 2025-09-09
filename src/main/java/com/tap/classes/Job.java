@@ -9,6 +9,7 @@ public class Job {
     private int salaryMax;
     private String deadline;
     private String description;
+	private int id;
 
     // getters and setters
     public String getTitle() { 
@@ -59,5 +60,13 @@ public class Job {
     public void setDescription(String description) { 
     	this.description = description; 
     	}
+	public void setId(int int1) {
+		this.id= int1;
+		
+	}
+	public int getId()
+	{
+		return id;
+	}
 }
 
