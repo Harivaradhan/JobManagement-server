@@ -9,7 +9,7 @@ public class JobDao {
 
     public List<Job> getAllJobs() {
         List<Job> jobs = new ArrayList<>();
-        String sql = "SELECT * FROM Drives";  // adjust table name
+        String sql = "SELECT * FROM Drives";  
 
         try (Connection conn = Db.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -17,7 +17,7 @@ public class JobDao {
 
             while (rs.next()) {
                 Job job = new Job();
-                job.setId(rs.getInt("id")); // set id if you want
+                job.setId(rs.getInt("id"));  
                 job.setTitle(rs.getString("title"));
                 job.setCompany(rs.getString("company"));
                 job.setLocation(rs.getString("location"));
@@ -42,7 +42,6 @@ public class JobDao {
         try {
             con = Db.getConnection();
 
-            // 1️⃣ Get next ID
             int nextId = 1; // default if table is empty
             String maxIdQuery = "SELECT MAX(id) AS max_id FROM Drives";
             ps = con.prepareStatement(maxIdQuery);
