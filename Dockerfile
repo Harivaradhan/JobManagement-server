@@ -2,7 +2,7 @@
 FROM tomcat:9.0-jre11-openjdk-slim
 
 # Copy your packaged WAR file to Tomcat's webapps directory
-COPY target/management.war /usr/local/tomcat/webapps/
+COPY target/management.war /usr/local/tomcat/webapps/ROOT.war
 
 # Expose the port Tomcat runs on
 EXPOSE 8080
