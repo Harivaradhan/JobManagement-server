@@ -4,8 +4,6 @@ import com.google.gson.Gson;
 import com.tap.classes.Job;
 import com.tap.classes.JobDao;
 
-import com.tap.database.Db;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,11 +12,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet("/api/jobs")
@@ -28,12 +21,9 @@ public class JobServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
-        resp.setHeader("Access-Control-Allow-Origin", "*"); 
-        resp.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
         try {
-            List<Job> jobs = jobDao.getAllJobs();  // implement in JobDao
+            List<Job> jobs = jobDao.getAllJobs();
             Gson gson = new Gson();
             String json = gson.toJson(jobs);
             resp.getWriter().write(json);
@@ -43,71 +33,46 @@ public class JobServlet extends HttpServlet {
         }
     }
 
-    
-    
-    
-    
-    
-@Override
-protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    response.setHeader("Access-Control-Allow-Origin", "*");
-    response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-    response.setHeader("Access-Control-Allow-Credentials", "true");
-    response.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-    if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+    @Override
+    protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // CORS handled by filter, just return 200 OK
         response.setStatus(HttpServletResponse.SC_OK);
-        return;
     }
 
-}
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json");
 
-		
-		
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		response.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-		response.setHeader("Access-Control-Allow-Credentials", "true");
+        // Read JSON body
+        BufferedReader reader = request.getReader();
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
+        }
 
-		response.setHeader("Access-Control-Allow-Headers", "Content-Type");
-	
+        String requestBody = sb.toString();
+        System.out.println("Received JSON: " + requestBody);
 
-		
-		
-			BufferedReader reader = request.getReader();
-			StringBuilder sb = new StringBuilder();
-			String line;
-			while((line= reader.readLine())!=null)
-			{
-				System.out.print("ayyo poche");
-				sb.append(line);
-			}
-			
-			System.out.println("RAW JSON: [" + sb.toString() + "]");
-			Gson gson = new Gson();
-				String json=sb.toString();
-				if ( json== null || json.trim().isEmpty() || json.trim().equals("{}")) {
-				    System.out.println("No data received yet.");
-				    return;
-				}
-				
-				String requestBody = sb.toString();
-		        System.out.println("Received JSON: " + requestBody);
+        if (requestBody == null || requestBody.trim().isEmpty() || requestBody.trim().equals("{}")) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write("{\"error\":\"Empty request body\"}");
+            return;
+        }
 
-		        // Parse JSON → Job
-		        Job job = new Gson().fromJson(requestBody, Job.class);
+        // Parse JSON → Job
+        Job job = new Gson().fromJson(requestBody, Job.class);
 
-		        if (job == null) {
-		            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-		            response.getWriter().write("{\"error\":\"Invalid JSON payload\"}");
-		            return;
-		        }
-				 jobDao.saveJob(job);
+        if (job == null) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write("{\"error\":\"Invalid JSON payload\"}");
+            return;
+        }
 
-			        // Respond
-			        response.getWriter().write("{\"status\":\"success\",\"message\":\"Job saved successfully!\"}");
-		
-	
-	}
+        // Save job
+        jobDao.saveJob(job);
 
+        // Respond
+        response.getWriter().write("{\"status\":\"success\",\"message\":\"Job saved successfully!\"}");
+    }
 }
